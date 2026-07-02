@@ -235,69 +235,82 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-        /* Hide Streamlit Chrome */
+        /* 1. Hide all Streamlit Chrome completely */
         #MainMenu, header, footer {visibility: hidden;}
         .stAppDeployButton {display: none;}
+        [data-testid="collapsedControl"] {display: none !important;} /* Hides sidebar toggle arrow */
+        section[data-testid="stSidebar"] {display: none !important;} /* Force kill sidebar */
 
-        /* App Background - Clean Light Gray */
+        /* 2. Global Clean Background & Typography */
         .stApp {
-            background-color: #f9fafb !important;
-            background-image: none !important;
+            background-color: #fdfdfd !important;
+        }
+        .block-container {
+            max-width: 850px !important; /* Center focus like ChatGPT */
+            padding-top: 3rem !important;
+            padding-bottom: 120px !important;
+        }
+        h1, h2, h3, p, span, div {
+            color: #1a1a1a !important;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
         }
 
-        /* Force main area text colors */
-        .block-container h1, .block-container h2, .block-container h3, .block-container p, .block-container span {
-            color: #111827 !important;
+        /* 3. Title Styling */
+        h1 {
+            text-align: center;
+            font-weight: 800 !important;
+            letter-spacing: -1px;
+            margin-bottom: 2rem !important;
         }
 
-        /* FIX SIDEBAR: Pure white with sharp contrast */
-        [data-testid="stSidebar"] {
-            background-color: #ffffff !important;
-            border-right: 1px solid #e5e7eb !important;
+        /* 4. Fix the Bottom Input Bar (Kill the dark mode strip) */
+        [data-testid="stBottomBlock"] {
+            background: transparent !important; 
         }
-        [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3, [data-testid="stSidebar"] p, [data-testid="stSidebar"] li, [data-testid="stSidebar"] span {
-            color: #374151 !important;
-        }
-        [data-testid="stSidebar"] hr {
-            border-color: #f3f4f6 !important;
-        }
-
-        /* FIX CHAT INPUT: Pop and align with light theme */
         [data-testid="stChatInput"] {
             background-color: #ffffff !important;
-            border: 1px solid #d1d5db !important;
-            border-radius: 16px !important;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05) !important;
+            border: 1px solid #e5e7eb !important;
+            border-radius: 24px !important;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01) !important;
+            padding: 4px !important;
+            margin-bottom: 1rem !important;
         }
-        [data-testid="stChatInput"] textarea, [data-testid="stChatInput"] span {
+        [data-testid="stChatInput"] textarea {
             color: #111827 !important;
         }
 
-        /* Premium Chat Bubbles */
+        /* 5. Premium Chat Bubbles */
         .stChatMessage {
-            background-color: #ffffff !important;
-            border-radius: 12px !important;
-            padding: 1.5rem !important;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
-            border: 1px solid #f3f4f6 !important;
-            margin-bottom: 1.5rem !important;
+            background-color: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0.5rem 0 !important;
+        }
+        .stChatMessage [data-testid="stMarkdownContainer"] {
+            background-color: #ffffff;
+            padding: 1.25rem 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            border: 1px solid #f3f4f6;
         }
 
-        /* NLP Expander */
+        /* 6. NLP Diagnostics Expander - Techy but elegant */
         [data-testid="stExpander"] {
-            background-color: #f8fafc !important;
-            border: 1px solid #e2e8f0 !important;
+            background-color: #fafafa !important;
+            border: 1px dashed #d1d5db !important;
             border-radius: 12px !important;
+            margin-top: 0.5rem;
         }
         [data-testid="stExpander"] summary {
-            color: #475569 !important;
-            font-weight: 600 !important;
+            color: #6b7280 !important;
+            font-size: 0.9rem !important;
         }
         code {
-            color: #ec4899 !important;
-            background-color: #fdf2f8 !important;
-            border-radius: 4px !important;
-            padding: 0.2rem 0.4rem !important;
+            color: #8b5cf6 !important;
+            background-color: #f3f0ff !important;
+            border-radius: 6px !important;
+            padding: 0.2rem 0.5rem !important;
+            font-size: 0.85em !important;
         }
     </style>
     """,
@@ -308,23 +321,6 @@ st.markdown(
 faqs_data = load_faqs(_FAQ_PATH)
 st.session_state["faqs_json"] = json.dumps(faqs_data)
 _proc_qs, _vec, _tfidf = build_vectoriser(st.session_state["faqs_json"])
-
-# --- Sidebar ---
-with st.sidebar:
-    st.title("🤖 CodeAlpha SmartAssistant")
-    st.markdown("---")
-    st.markdown("### 📖 About")
-    st.markdown(
-        "An enterprise-grade FAQ chatbot powered by **NLP** "
-        "(NLTK + TF-IDF + cosine similarity). Ask a question and "
-        "receive an instant answer from our knowledge base."
-    )
-    st.markdown("---")
-    st.markdown("### 💡 Suggested Questions")
-    for i, faq in enumerate(faqs_data[:4]):
-        st.markdown(f"- _{faq['question']}_")
-    st.markdown("---")
-    st.caption("Built for CodeAlpha Internship — Task 2")
 
 # --- Main interface ---
 st.title("🤖 CodeAlpha SmartAssistant — FAQ Bot")
