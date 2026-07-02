@@ -67,8 +67,3 @@ CodeAlpha_FAQ_Chatbot/
 | `scikit-learn`     | ≥ 1.3   | TF‑IDF vectorisation + cosine similarity |
 
 ---
-
-
-## License
-
-Submitted as part of the **CodeAlpha Artificial Intelligence Internship**.
