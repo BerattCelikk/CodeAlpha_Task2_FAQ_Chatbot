@@ -204,16 +204,62 @@ st.set_page_config(
     layout="centered",
 )
 
-st.title("🤖 CodeAlpha SmartAssistant — FAQ Bot")
+# --- Inject custom CSS to hide Streamlit chrome and polish layout ---
 st.markdown(
-    "Ask me anything about the **SmartAssistant** product. "
-    "I'll match your question to our knowledge base."
+    """
+    <style>
+        #MainMenu {visibility: hidden;}
+        header {visibility: hidden;}
+        footer {visibility: hidden;}
+        .stAppDeployButton {display: none;}
+        .stApp {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .block-container {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+        .stChatMessage {
+            background: white;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            margin-bottom: 0.5rem;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True,
 )
 
 # --- Eager-load data into session state (also primes cache) ---
 faqs_data = load_faqs(_FAQ_PATH)
 st.session_state["faqs_json"] = json.dumps(faqs_data)
 _proc_qs, _vec, _tfidf = build_vectoriser(st.session_state["faqs_json"])
+
+# --- Sidebar ---
+with st.sidebar:
+    st.title("🤖 CodeAlpha SmartAssistant")
+    st.markdown("---")
+    st.markdown("### 📖 About")
+    st.markdown(
+        "An enterprise-grade FAQ chatbot powered by **NLP** "
+        "(NLTK + TF-IDF + cosine similarity). Ask a question and "
+        "receive an instant answer from our knowledge base."
+    )
+    st.markdown("---")
+    st.markdown("### 💡 Suggested Questions")
+    for i, faq in enumerate(faqs_data[:4]):
+        st.markdown(f"- _{faq['question']}_")
+    st.markdown("---")
+    st.caption("Built for CodeAlpha Internship — Task 2")
+
+# --- Main interface ---
+st.title("🤖 CodeAlpha SmartAssistant — FAQ Bot")
+st.markdown(
+    "Ask me anything about the **SmartAssistant** product. "
+    "I'll match your question to our knowledge base."
+)
+st.divider()
 
 # --- Chat history ---
 if "messages" not in st.session_state:
