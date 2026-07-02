@@ -235,23 +235,52 @@ st.set_page_config(
 st.markdown(
     """
     <style>
+        /* Hide Streamlit Chrome */
         #MainMenu {visibility: hidden;}
         header {visibility: hidden;}
         footer {visibility: hidden;}
         .stAppDeployButton {display: none;}
+
+        /* Modern Light/Gradient Background & Force Dark Text */
         .stApp {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
         }
-        .block-container {
-            padding-top: 2rem;
-            padding-bottom: 2rem;
+
+        /* Force high-contrast text for all markdown and headings */
+        .stApp h1, .stApp h2, .stApp h3, .stApp p, .stApp span, .stApp div {
+            color: #0f172a !important;
         }
+
+        /* Premium Chat Message Bubbles */
         .stChatMessage {
-            background: white;
-            border-radius: 12px;
-            padding: 0.75rem 1rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            margin-bottom: 0.5rem;
+            background-color: #ffffff !important;
+            border-radius: 16px !important;
+            padding: 1.5rem !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+            margin-bottom: 1.2rem !important;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* NLP Engine Diagnostics Expander Styling */
+        [data-testid="stExpander"] {
+            background-color: #f1f5f9 !important;
+            border: 1px solid #cbd5e1 !important;
+            border-radius: 12px !important;
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.02) !important;
+            margin-top: 0.5rem;
+        }
+        [data-testid="stExpander"] summary {
+            color: #334155 !important;
+            font-weight: 600 !important;
+        }
+
+        /* Code and Token Styling for NLP output */
+        code {
+            color: #db2777 !important;
+            background-color: #fce7f3 !important;
+            padding: 0.2rem 0.4rem !important;
+            border-radius: 6px !important;
+            font-weight: 600 !important;
         }
     </style>
     """,
