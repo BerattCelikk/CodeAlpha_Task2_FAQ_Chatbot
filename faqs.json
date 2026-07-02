@@ -1,0 +1,74 @@
+[
+    {
+        "question": "What is the CodeAlpha SmartAssistant?",
+        "answer": "The CodeAlpha SmartAssistant is an AI-powered virtual productivity companion that helps you manage tasks, schedule meetings, answer questions, and automate workflows across all your devices."
+    },
+    {
+        "question": "How do I set up the SmartAssistant for the first time?",
+        "answer": "Download the app from the official website or app store, create an account using your email, and follow the on-screen setup wizard. The entire setup takes less than 5 minutes."
+    },
+    {
+        "question": "Which platforms does SmartAssistant support?",
+        "answer": "SmartAssistant is available on Windows, macOS, Linux, iOS, and Android. Your data syncs seamlessly across all platforms in real time."
+    },
+    {
+        "question": "Can I integrate SmartAssistant with third-party apps?",
+        "answer": "Yes! SmartAssistant supports integration with popular tools like Google Calendar, Slack, Trello, Notion, Microsoft Teams, and Zapier. You can manage integrations from the settings panel."
+    },
+    {
+        "question": "Is my data secure with SmartAssistant?",
+        "answer": "Absolutely. All data is encrypted end-to-end using AES-256. We are GDPR and SOC 2 Type II compliant, and we never sell or share your data with third parties."
+    },
+    {
+        "question": "What is the pricing structure?",
+        "answer": "SmartAssistant offers a free tier with basic task management and 100 automation actions per month. Premium plans start at $9.99/month and unlock unlimited actions, advanced analytics, and priority support."
+    },
+    {
+        "question": "How do I reset my password?",
+        "answer": "Click 'Forgot Password' on the login screen, enter your registered email, and you will receive a password reset link. The link expires in 60 minutes for security."
+    },
+    {
+        "question": "Can I use SmartAssistant offline?",
+        "answer": "Yes, SmartAssistant supports offline mode. Changes you make offline are automatically synced once you reconnect to the internet."
+    },
+    {
+        "question": "How does the AI task prioritization work?",
+        "answer": "SmartAssistant uses a machine learning model that analyzes your deadlines, workload patterns, and past behavior to automatically suggest the optimal order for your daily tasks."
+    },
+    {
+        "question": "What should I do if SmartAssistant is not responding?",
+        "answer": "Try restarting the app first. If the issue persists, clear the app cache via Settings > Advanced > Clear Cache, or contact our support team at support@codealpha.dev."
+    },
+    {
+        "question": "Can I customize voice commands?",
+        "answer": "Yes. Go to Settings > Voice > Custom Commands, where you can create custom voice triggers for any workflow or action in the app."
+    },
+    {
+        "question": "How do I export my data from SmartAssistant?",
+        "answer": "Navigate to Settings > Account > Export Data. You can export your data as JSON, CSV, or PDF. A download link will be sent to your email."
+    },
+    {
+        "question": "Does SmartAssistant support team collaboration?",
+        "answer": "Yes, the Team plan allows you to share task lists, assign responsibilities, and monitor project progress with your team. Team plans start at $29.99/month for up to 10 members."
+    },
+    {
+        "question": "Is there a mobile app available?",
+        "answer": "Yes, the SmartAssistant mobile app is available for free on both the App Store (iOS) and Google Play Store (Android) with full feature parity."
+    },
+    {
+        "question": "How do I delete my account?",
+        "answer": "To delete your account, go to Settings > Account > Delete Account. This action is permanent and will erase all your data within 30 days."
+    },
+    {
+        "question": "Does SmartAssistant support multiple languages?",
+        "answer": "Yes, the SmartAssistant interface is available in English, Spanish, French, German, Japanese, and Chinese. More languages are being added regularly."
+    },
+    {
+        "question": "Can I schedule recurring tasks?",
+        "answer": "Absolutely. When creating a task you can set it to repeat daily, weekly, monthly, or with a custom cron expression. SmartAssistant will automatically regenerate it on schedule."
+    },
+    {
+        "question": "How does the automation workflow builder work?",
+        "answer": "The workflow builder provides a drag-and-drop canvas where you connect triggers, conditions, and actions. Each workflow can be tested in a sandbox before going live."
+    }
+]
