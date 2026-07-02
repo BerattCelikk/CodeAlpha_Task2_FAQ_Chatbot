@@ -130,6 +130,21 @@ def preprocess(text: str) -> str:
     return " ".join(tokens)
 
 
+def tokenize_for_display(text: str) -> list[str]:
+    """Return the stemmed tokens of *text* for display in the diagnostics UI.
+
+    Args:
+        text: Raw input string.
+
+    Returns:
+        List of processed tokens after lowercasing and stemming.
+    """
+    text = text.lower()
+    text = re.sub(r"[^a-z0-9\s]", "", text)
+    tokens = nltk.word_tokenize(text)
+    return sorted(set(_stemmer.stem(t) for t in tokens if t not in _stop_words))
+
+
 # ---------------------------------------------------------------------------
 # Cached vectoriser building
 # ---------------------------------------------------------------------------
@@ -166,7 +181,7 @@ def get_best_answer(
     vectorizer: TfidfVectorizer,
     tfidf_matrix: "Any",  # sparse matrix
     threshold: float = _FALLBACK_THRESHOLD,
-) -> Optional[tuple[str, float]]:
+) -> dict:
     """Find the best FAQ answer for *user_query*.
 
     Args:
@@ -177,22 +192,34 @@ def get_best_answer(
         threshold: Minimum similarity score to return a match.
 
     Returns:
-        ``(answer_text, confidence)`` if the best score >= *threshold*,
-        else ``None``.
+        A dict with keys:
+        - ``answer``: matched answer text, or ``None`` if below threshold.
+        - ``matched_question``: the original FAQ question text.
+        - ``best_score``: the cosine similarity score.
+        - ``is_match``: ``True`` if *best_score >= threshold*.
     """
     query_vec = vectorizer.transform([preprocess(user_query)])
     similarities = cosine_similarity(query_vec, tfidf_matrix).flatten()
     best_idx = int(similarities.argmax())
     best_score = float(similarities[best_idx])
 
-    if best_score < threshold:
-        logger.info(
-            "Low-confidence query (%.3f): %r", best_score, user_query[:80]
-        )
-        return None
-
     faqs = json.loads(st.session_state["faqs_json"])
-    return faqs[best_idx]["answer"], best_score
+    matched_question = faqs[best_idx]["question"]
+    answer = faqs[best_idx]["answer"] if best_score >= threshold else None
+
+    logger.info(
+        "Query %r matched intent %r with score %.3f",
+        user_query[:80],
+        matched_question,
+        best_score,
+    )
+
+    return {
+        "answer": answer,
+        "matched_question": matched_question,
+        "best_score": best_score,
+        "is_match": best_score >= threshold,
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -291,15 +318,24 @@ if prompt := st.chat_input("Type your question here…"):
                 prompt, _proc_qs, _vec, _tfidf
             )
 
-        if result:
-            answer, confidence = result
-            st.markdown(answer)
-            st.caption(f"Match confidence: {confidence:.1%}")
+        if result["is_match"]:
+            st.markdown(result["answer"])
+            st.caption(f"Match confidence: {result['best_score']:.1%}")
             st.session_state.messages.append(
-                {"role": "assistant", "content": answer}
+                {"role": "assistant", "content": result["answer"]}
             )
         else:
             st.markdown(_FALLBACK_MESSAGE)
             st.session_state.messages.append(
                 {"role": "assistant", "content": _FALLBACK_MESSAGE}
             )
+
+        # --- NLP Diagnostics Expander ---
+        with st.expander("⚙️ NLP Engine Diagnostics"):
+            tokens = tokenize_for_display(prompt)
+            st.markdown(f"**User Input Tokens:** `{tokens}`")
+            st.markdown(f"**Matched Intent:** _{result['matched_question']}_")
+            st.markdown(f"**Confidence Score:** {result['best_score']:.1%}")
+
+            if not result["is_match"]:
+                st.warning("⚠️ Confidence was too low for a definitive match.")
