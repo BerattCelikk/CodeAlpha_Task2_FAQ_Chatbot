@@ -236,51 +236,68 @@ st.markdown(
     """
     <style>
         /* Hide Streamlit Chrome */
-        #MainMenu {visibility: hidden;}
-        header {visibility: hidden;}
-        footer {visibility: hidden;}
+        #MainMenu, header, footer {visibility: hidden;}
         .stAppDeployButton {display: none;}
 
-        /* Modern Light/Gradient Background & Force Dark Text */
+        /* App Background - Clean Light Gray */
         .stApp {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            background-color: #f9fafb !important;
+            background-image: none !important;
         }
 
-        /* Force high-contrast text for all markdown and headings */
-        .stApp h1, .stApp h2, .stApp h3, .stApp p, .stApp span, .stApp div {
-            color: #0f172a !important;
+        /* Force main area text colors */
+        .block-container h1, .block-container h2, .block-container h3, .block-container p, .block-container span {
+            color: #111827 !important;
         }
 
-        /* Premium Chat Message Bubbles */
+        /* FIX SIDEBAR: Pure white with sharp contrast */
+        [data-testid="stSidebar"] {
+            background-color: #ffffff !important;
+            border-right: 1px solid #e5e7eb !important;
+        }
+        [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3, [data-testid="stSidebar"] p, [data-testid="stSidebar"] li, [data-testid="stSidebar"] span {
+            color: #374151 !important;
+        }
+        [data-testid="stSidebar"] hr {
+            border-color: #f3f4f6 !important;
+        }
+
+        /* FIX CHAT INPUT: Pop and align with light theme */
+        [data-testid="stChatInput"] {
+            background-color: #ffffff !important;
+            border: 1px solid #d1d5db !important;
+            border-radius: 16px !important;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05) !important;
+        }
+        [data-testid="stChatInput"] textarea, [data-testid="stChatInput"] span {
+            color: #111827 !important;
+        }
+
+        /* Premium Chat Bubbles */
         .stChatMessage {
             background-color: #ffffff !important;
-            border-radius: 16px !important;
+            border-radius: 12px !important;
             padding: 1.5rem !important;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
-            margin-bottom: 1.2rem !important;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #f3f4f6 !important;
+            margin-bottom: 1.5rem !important;
         }
 
-        /* NLP Engine Diagnostics Expander Styling */
+        /* NLP Expander */
         [data-testid="stExpander"] {
-            background-color: #f1f5f9 !important;
-            border: 1px solid #cbd5e1 !important;
+            background-color: #f8fafc !important;
+            border: 1px solid #e2e8f0 !important;
             border-radius: 12px !important;
-            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.02) !important;
-            margin-top: 0.5rem;
         }
         [data-testid="stExpander"] summary {
-            color: #334155 !important;
+            color: #475569 !important;
             font-weight: 600 !important;
         }
-
-        /* Code and Token Styling for NLP output */
         code {
-            color: #db2777 !important;
-            background-color: #fce7f3 !important;
+            color: #ec4899 !important;
+            background-color: #fdf2f8 !important;
+            border-radius: 4px !important;
             padding: 0.2rem 0.4rem !important;
-            border-radius: 6px !important;
-            font-weight: 600 !important;
         }
     </style>
     """,
