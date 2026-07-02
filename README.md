@@ -1,4 +1,4 @@
-# 🤖 CodeAlpha FAQ Chatbot
+# CodeAlpha FAQ Chatbot
 
 **CodeAlpha Internship — Task 2**  
 An enterprise-grade, NLP-powered FAQ chatbot that uses **TF-IDF vector similarity** to answer questions about the fictional **CodeAlpha SmartAssistant** product.
@@ -68,12 +68,6 @@ CodeAlpha_FAQ_Chatbot/
 
 ---
 
-## LinkedIn Video Explanation & GitHub Repo Link
-
-> 🎥 *Video walk-through:* [Add your LinkedIn post / video link here]  
-> 📂 *GitHub repository:* [Add your repository URL here]
-
----
 
 ## License
 
